@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import requests
 from prefect import flow, task
 from prefect_gcp import GcsBucket
 from pathlib import Path
