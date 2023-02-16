@@ -69,7 +69,7 @@ def clean_stationdata(df: pd.DataFrame) -> pd.DataFrame:
 def write_local_stationdata(df: pd.DataFrame, filename: str) -> Path:
     """Stores the dataframe locally as a parquet file, returning the path where the file is saved."""
     path = Path(f"data/stationdata/{filename}.parquet")
-    df.to_parquet(path=path, compression="gzip")
+    df.to_parquet(path=path, compression="snappy")
     return path
 
 

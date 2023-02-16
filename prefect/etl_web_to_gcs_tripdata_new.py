@@ -45,11 +45,12 @@ def clean_tripdata_new(df: pd.DataFrame) -> pd.DataFrame:
     df["stoptime"] = pd.to_datetime(df["stoptime"])
 
     # start_station_id
-    df["start_station_id"] = df["start station id"].astype("object")
+    df["start_station_id"] = df["start station id"].astype(str)
     df = df.drop(["start station id"], axis=1)
 
     # start_station_name
-    df["start_station_name"] = df["start station name"].str.lower()
+    df["start_station_name"] = df["start station name"].astype(str)
+    df["start_station_name"] = df["start_station_name"].str.lower()
     df = df.drop(["start station name"], axis=1)
 
     # start_station_latitude
@@ -65,11 +66,12 @@ def clean_tripdata_new(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop(["start station longitude"], axis=1)
 
     # end_station_id
-    df["end_station_id"] = df["end station id"].astype("object")
+    df["end_station_id"] = df["end station id"].astype(str)
     df = df.drop(["end station id"], axis=1)
 
     # end_station_name
-    df["end_station_name"] = df["end station name"].str.lower()
+    df["end_station_name"] = df["end station name"].astype(str)
+    df["end_station_name"] = df["end_station_name"].str.lower()
     df = df.drop(["end station name"], axis=1)
 
     # end_station_latitude
@@ -89,6 +91,10 @@ def clean_tripdata_new(df: pd.DataFrame) -> pd.DataFrame:
     # bikeid
     df["bikeid"] = df["bikeid"].astype(str)
 
+    # usertype
+    df["usertype"] = df["usertype"].astype(str)
+    df["usertype"] = df["usertype"].str.lower()
+
     # birth_year
     if "birth year" in df:
         df["birth_year"] = df["birth year"]
@@ -100,9 +106,9 @@ def clean_tripdata_new(df: pd.DataFrame) -> pd.DataFrame:
 
     # gender
     if "gender" in df:
-        df["gender"] = pd.to_numeric(df["gender"], downcast="float")
+        df["gender"] = pd.to_numeric(df["gender"], downcast="integer")
     else:
-        df["gender"] = np.nan
+        df["gender"] = 0
 
     # postal_code
     if "postal code" in df:
@@ -121,7 +127,7 @@ def clean_tripdata_new(df: pd.DataFrame) -> pd.DataFrame:
 def write_local_tripdata_new(month: int, year: int, df: pd.DataFrame) -> Path:
     """Write DataFrame out as a parquet file"""
     path = Path(f"data/tripdata/{year}_{month:02}-tripdata.parquet")
-    df.to_parquet(path=path, compression="gzip")
+    df.to_parquet(path=path, compression="snappy")
     return path
 
 

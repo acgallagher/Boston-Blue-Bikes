@@ -48,9 +48,11 @@ def clean_tripdata_old(df: pd.DataFrame) -> pd.DataFrame:
     # start_station_id
     df["start_station_id"] = df["Start station number"]
     df = df.drop(["Start station number"], axis=1)
+    df["start_station_id"] = df["start_station_id"].astype(str)
 
     # start_station_name
-    df["start_station_name"] = df["Start station name"].str.lower()
+    df["start_station_name"] = df["Start station name"].astype(str)
+    df["start_station_name"] = df["start_station_name"].str.lower()
     df = df.drop(["Start station name"], axis=1)
 
     # start_station_latitude
@@ -62,9 +64,11 @@ def clean_tripdata_old(df: pd.DataFrame) -> pd.DataFrame:
     # end_station_id
     df["end_station_id"] = df["End station number"]
     df = df.drop(["End station number"], axis=1)
+    df["end_station_id"] = df["end_station_id"].astype(str)
 
     # end_station_name
-    df["end_station_name"] = df["End station name"].str.lower()
+    df["end_station_name"] = df["End station name"].astype(str)
+    df["end_station_name"] = df["end_station_name"].str.lower()
     df = df.drop(["End station name"], axis=1)
 
     # end_station_latitude
@@ -74,20 +78,16 @@ def clean_tripdata_old(df: pd.DataFrame) -> pd.DataFrame:
     df["end_station_longitude"] = np.nan
 
     # bikeid
-    df["bikeid"] = df["Bike number"]
+    df["bikeid"] = df["Bike number"].astype(str)
     df = df.drop(["Bike number"], axis=1)
 
     # usertype
-    df["usertype"] = df["Member type"].str.lower()
+    df["usertype"] = df["Member type"].astype(str)
+    df["usertype"] = df["usertype"].str.lower()
     df = df.drop(["Member type"], axis=1)
 
-    # postal_code
-    df["postal_code"] = df["Zip code"].astype(str)
-    df = df.drop(["Zip code"], axis=1)
-
-    df["postal_code"] = pd.to_numeric(
-        df["postal_code"], downcast="integer", errors="coerce"
-    )
+    df.loc[df["usertype"] == "member", "usertype"] = "subscriber"
+    df.loc[df["usertype"] == "casual", "usertype"] = "customer"
 
     # birth_year
     df["birth_year"] = np.nan
@@ -97,8 +97,16 @@ def clean_tripdata_old(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[(df["gender"] != "Male") & (df["gender"] != "Female"), "gender"] = 0
     df.loc[df["gender"] == "Male", "gender"] = 1
     df.loc[df["gender"] == "Female", "gender"] = 2
-    df["gender"] = pd.to_numeric(df["gender"], downcast="float")
+    df["gender"] = pd.to_numeric(df["gender"], downcast="integer")
     df = df.drop(["Gender"], axis=1)
+
+    # postal_code
+    df["postal_code"] = df["Zip code"].astype(str)
+    df = df.drop(["Zip code"], axis=1)
+
+    df["postal_code"] = pd.to_numeric(
+        df["postal_code"], downcast="float", errors="coerce"
+    )
 
     return df
 
@@ -107,7 +115,7 @@ def clean_tripdata_old(df: pd.DataFrame) -> pd.DataFrame:
 def write_local_tripdata_old(year: int, df: pd.DataFrame) -> Path:
     """Write DataFrame out as a parquet file"""
     path = Path(f"data/tripdata/{year}-tripdata.parquet")
-    df.to_parquet(path=path, compression="gzip")
+    df.to_parquet(path=path, compression="snappy")
     return path
 
 
