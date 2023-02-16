@@ -7,9 +7,9 @@ from prefect import flow
 
 @flow()
 def main_flow(months: list[int], years: list[int]) -> None:
-    web_to_gcs_tripdata_old()
-    web_to_gcs_tripdata_new(months, years)
-    web_to_gcs_stationdata()
+    # web_to_gcs_tripdata_old()
+    # web_to_gcs_tripdata_new(months, years)
+    # web_to_gcs_stationdata()
     etl_gcs_to_bq()
 
 

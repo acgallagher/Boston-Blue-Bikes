@@ -42,13 +42,13 @@ sources:
           - name: birth_year
             data_type: FLOAT64
           - name: gender
-            data_type: FLOAT64
+            data_type: INTEGER
           - name: postal_code
             data_type: FLOAT64
     
       - name: stationdata
         external:
-          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/*.parquet' 
+          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/*.parquet'
           options:
             format: PARQUET
 

@@ -61,7 +61,7 @@ def stationdata_gcs_to_bp() -> None:
 
 @flow()
 def etl_gcs_to_bq() -> None:
-    # tripdata_gcs_to_bq()
+    tripdata_gcs_to_bq()
     stationdata_gcs_to_bp()
 
 
