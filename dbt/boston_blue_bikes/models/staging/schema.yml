@@ -1,0 +1,79 @@
+version: 2
+
+sources:
+  - name: staging
+    database: boston-blue-bikes
+    loader: gcloud storage
+
+    tables:
+      - name: tripdata
+        external:
+          location: 'gs://boston_blue_bikes_data_lake/data/tripdata/*.parquet' 
+          options:
+            format: PARQUET
+
+        columns: 
+          - name: tripduration
+            data_type: INTEGER
+          - name: starttime
+            data_type: TIMESTAMP
+          - name: stoptime
+            data_type: TIMESTAMP
+          - name: bikeid
+            data_type: STRING
+          - name: usertype
+            data_type: STRING
+          - name: start_station_id
+            data_type: STRING 
+          - name: start_station_name
+            data_type: STRING
+          - name: start_station_latitude
+            data_type: FLOAT64 
+          - name: start_station_longitude
+            data_type: FLOAT64 
+          - name: end_station_id
+            data_type: STRING
+          - name: end_station_name
+            data_type: STRING
+          - name: end_station_latitude
+            data_type: FLOAT64 
+          - name: end_station_longitude
+            data_type: FLOAT64 
+          - name: birth_year
+            data_type: FLOAT64
+          - name: gender
+            data_type: FLOAT64
+          - name: postal_code
+            data_type: FLOAT64
+    
+      - name: stationdata
+        external:
+          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/*.parquet' 
+          options:
+            format: PARQUET
+
+        columns: 
+          - name: station_id
+            data_type: STRING
+          - name: station_name
+            data_type: STRING
+          - name: station_latitude
+            data_type: FLOAT64
+          - name: station_longitude
+            data_type: FLOAT64
+          - name: district
+            data_type: STRING
+          - name: public
+            data_type: STRING
+          - name: total_docks
+            data_type: INTEGER
+          - name: deployment_year
+            data_type: FLOAT64
+          
+            
+
+models:
+  - name: trips
+  - name: stations
+  - name: tripdata_testbuild
+  - name: stationdata_testbuild
