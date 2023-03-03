@@ -6,12 +6,13 @@ from prefect_gcp import GcpCredentials
 from prefect_dask.task_runners import DaskTaskRunner
 import os
 
-
-@task()
+"""
+@task(log_prints=True)
 def extract_from_gcs(file_path: Path, folder_path: str) -> None:
-    """Download trip data from GCS"""
+    "Download trip data from GCS"
     gcs_block = GcsBucket.load("boston-blue-bikes")
-    gcs_block.get_directory(from_path=file_path, local_path=folder_path)
+    "boston_blue_bikes_data_lake/data/tripdata/2015_01-tripdata.parquet"
+    gcs_block.get_directory(from_path=file_path, local_path=folder_path)"""
 
 
 @task()
@@ -32,18 +33,20 @@ def write_bq(df, file) -> None:
         destination_table=f"raw_data.{file}",
         project_id="boston-blue-bikes",
         credentials=gcp_credentials_block.get_credentials_from_service_account(),
-        chunksize=500_000,
+        chunksize=250_000,
         if_exists="replace",
     )
 
 
 @flow(log_prints=True, task_runner=DaskTaskRunner())
 def tripdata_gcs_to_bq(log_prints=True) -> None:
-    folder_path = Path("data/tripdata")
+    folder_path = "data/tripdata"
     tripdata_files = os.listdir(Path(folder_path))
     for file in tripdata_files:
         file_path = os.path.join(folder_path, file)
-        extract_from_gcs.submit(file_path, folder_path)
+
+        # extract_from_gcs(file_path, folder_path)
+
         df = transform.submit(file_path)
         write_bq.submit(df, file)
 
@@ -54,14 +57,14 @@ def stationdata_gcs_to_bp() -> None:
     stationdata_files = os.listdir(Path(folder_path))
     for file in stationdata_files:
         file_path = os.path.join(folder_path, file)
-        extract_from_gcs(file_path, file)
+        # extract_from_gcs(file_path, file)
         df = transform(file_path)
         write_bq(df, file)
 
 
 @flow()
 def etl_gcs_to_bq() -> None:
-    tripdata_gcs_to_bq()
+    # tripdata_gcs_to_bq()
     stationdata_gcs_to_bp()
 
 
