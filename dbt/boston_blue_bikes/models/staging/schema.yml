@@ -12,15 +12,14 @@ sources:
           options:
             format: PARQUET
     
-      - name: stationdata
+      - name: stationdata_status
         external:
-          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/*.parquet'
+          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/station_status-*.parquet'
           options:
             format: PARQUET
 
-
-models:
-  - name: trips
-  - name: stations
-  - name: tripdata_testbuild
-  - name: stationdata_testbuild
+      - name: stationdata_information
+        external:
+          location: 'gs://boston_blue_bikes_data_lake/data/stationdata/station_information-*.parquet'
+          options:
+            format: PARQUET

@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: core
+    database: boston-blue-bikes
+    schema: staging
+
+    tables:
+      - name: tripdata
+      - name: stationdata_status
+      - name: stationdata_information
+    
+
+models:
+  - name: trips

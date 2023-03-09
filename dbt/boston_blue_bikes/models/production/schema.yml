@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: production
+    database: boston-blue-bikes
+    schema: core
+
+    tables:
+      - name: trips
+    
+
+models:
+  - name: trips_by_day
