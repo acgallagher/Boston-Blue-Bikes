@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: core
+  - name: staging
     database: boston-blue-bikes
     schema: staging
 
@@ -9,7 +9,10 @@ sources:
       - name: tripdata
       - name: stationdata_status
       - name: stationdata_information
+      - name: regions
     
 
 models:
   - name: trips
+  - name: stationdata_info_most_recent
+  - name: stationdata_status_most_recent

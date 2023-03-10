@@ -1,13 +1,16 @@
 version: 2
 
 sources:
-  - name: production
+  - name: core
     database: boston-blue-bikes
     schema: core
 
     tables:
       - name: trips
+      - name: stationdata_info_most_recent
+      - name: stationdata_status_most_recent
     
 
 models:
   - name: trips_by_day
+  - name: station_info
