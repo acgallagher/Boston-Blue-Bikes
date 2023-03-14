@@ -1,15 +1,18 @@
 ###
 ### A complete description of a Prefect Deployment for flow 'stationdata-flow'
 ###
-name: Station Data Flow
+name: station_data_flow
 description: null
-version: 48a350a7ef7d738795fa97a7310b0805
+version: 420c6be8364d4c0fbd32968e745d8d13
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: null
 tags: []
 parameters: {}
-schedule: null
+schedule:
+  cron: '*/15 * * * *'
+  timezone: null
+  day_or: true
 is_schedule_active: null
 infra_overrides: {}
 infrastructure:
@@ -37,4 +40,4 @@ parameter_openapi_schema:
   properties: {}
   required: null
   definitions: null
-timestamp: '2023-03-11T15:40:44.776387+00:00'
+timestamp: '2023-03-14T12:38:23.772713+00:00'

@@ -1,7 +1,7 @@
 from prefect import task, flow
 from prefect_gcp.credentials import GcpCredentials
 from prefect_dbt.cli import BigQueryTargetConfigs, DbtCliProfile
-from prefect_dbt import *
+from prefect_dbt.cli.commands import DbtCoreOperation
 
 """
 @task()
@@ -42,9 +42,12 @@ def build_operation_block(schema: str, commands: list[str], command_desc: str) -
 @flow()
 def trigger_dbt_flow() -> str:
     result = DbtCoreOperation(
-        commands=["dbt run"],
+        commands=[
+            'dbt run-operation stage_external_sources --vars "ext_full_refresh: true"',
+            "dbt run",
+        ],
         project_dir="./dbt/boston_blue_bikes",
-        profiles_dir="$HOME/.dbt/profiles.yml",
+        profiles_path="$HOME/.dbt",
     ).run()
     return result
 
