@@ -21,6 +21,6 @@ The project was a part of Data Talk Club's Data Engineering Zoomcamp. The goal w
 
 ## Result
 
-![[https://github.com/acgallagher/Boston-Blue-Bikes/blob/main/images/Screenshot%20from%202023-03-14%2014-31-43.png]]
+![alt text](https://github.com/acgallagher/Boston-Blue-Bikes/blob/main/images/Screenshot%20from%202023-03-14%2014-31-43.png)
 
-![[https://github.com/acgallagher/Boston-Blue-Bikes/blob/main/images/Screenshot%20from%202023-03-14%2014-32-33.png]]
+![alt text](https://github.com/acgallagher/Boston-Blue-Bikes/blob/main/images/Screenshot%20from%202023-03-14%2014-32-33.png)
