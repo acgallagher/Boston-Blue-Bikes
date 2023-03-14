@@ -32,12 +32,12 @@ infrastructure:
 flow_name: stationdata-flow
 manifest_path: null
 storage: null
-path: /home/andrewgallagher/Documents/Repositories/Boston-Blue-Bikes/prefect
-entrypoint: stationdata_flow.py:stationdata_flow
+path: /home/andrewgallagher/Documents/Repositories/Boston-Blue-Bikes
+entrypoint: prefect/stationdata_flow.py:stationdata_flow
 parameter_openapi_schema:
   title: Parameters
   type: object
   properties: {}
   required: null
   definitions: null
-timestamp: '2023-03-14T12:38:23.772713+00:00'
+timestamp: '2023-03-14T14:13:14.574059+00:00'

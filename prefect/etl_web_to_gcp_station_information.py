@@ -82,7 +82,7 @@ def clean_station_information(df: pd.DataFrame) -> pd.DataFrame:
 @task()
 def write_local_station_information(df: pd.DataFrame) -> str:
     """Stores the dataframe locally as a parquet file, returning the path where the file is saved."""
-    local_path = f"data/stationdata/station_information-{datetime.now().year:4}_{datetime.now().month:02}_{datetime.now().day:02}.parquet"
+    local_path = f"data/stationdata/station_information-{datetime.now().year:4}_{datetime.now().month:02}_{datetime.now().day:02}_{datetime.now().hour:02}-{datetime.now().minute:02}.parquet"
     path = Path(local_path)
     df.to_parquet(path=path, compression="snappy")
     return local_path
